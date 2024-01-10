@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background:url('https://img.freepik.com/free-vector/realistic-style-technology-particle-background_23-2148426704.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .signin-form {
+            max-width: 400px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-form h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .signin-form {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <title>Sign in Form</title>
+</head>
+
+<body>
+    <div class="signin-form">
+        <h2>Sign In</h2>
+        <form id="signin" method="post">
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Sign In</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var df = document.getElementById("signin");
+    df.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var pass = document.getElementById("password").value;
+      
+      var email = document.getElementById("email").value;
+      alert(email);
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:3300/signin",
+        dataType: "json",
+        data: { email: email, password: pass, url : window.location.href.substring(window.location.href.lastIndexOf("/") + 1) },
+        success: function (data) {
+          console.log(data);
+          if (data.message === "Success") {
+            alert("Signed In")
+            window.location = document.referrer;
+            window.location = "./contact.html";
+          } else {
+            alert("Login Failed, Please try again");
+          }
+        },
+      });
+    });
+  </script>
+
+</html>
